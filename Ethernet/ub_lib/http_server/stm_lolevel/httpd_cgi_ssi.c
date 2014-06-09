@@ -208,21 +208,21 @@ static void GPIO_Configuration(void)
 const char * LEDS_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char *pcValue[])
 {
   
-  /* We have only one SSI handler iIndex = 0 */
+  /* tylko jeden SSI handler iIndex = 0 */
   if (iIndex==0)
   {
     #ifdef USE_CGI_GPIO
     uint32_t i=0;
 
-   // falls GPIO noch nicht initialisiert
+   // gdy nie jest zainicjowana konfiguracja GPIO
    if (GPIO_not_configured ==1)       
    {
-     // GPIO initialisieren
+     // GPIO inicjalizacja
      GPIO_Configuration();
      GPIO_not_configured=0;
    }
 
-    // Alle GPIOs auf Lo-Pegel setzen
+    // All GPIOs
     GPIOD->BSRRH = GPIO_Pin_12;
     GPIOD->BSRRH = GPIO_Pin_13;
     GPIOD->BSRRH = GPIO_Pin_14;
@@ -231,7 +231,7 @@ const char * LEDS_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char 
     /* Check cgi parameter : example GET /leds.cgi?led=2&led=4 */
     for (i=0; i<iNumParams; i++)
     {
-      /* check parameter "led" */
+      /* GET "led" */
       if (strcmp(pcParam[i] , "led")==0)   
       {
         /* switch led1 ON if 1 */
@@ -258,8 +258,8 @@ const char * LEDS_CGI_Handler(int iIndex, int iNumParams, char *pcParam[], char 
 
     #endif // USE_CGI_GPIO
   }
-  /* uri to send after cgi call*/
-  return "/index.html";
+  /* adres po wykonaniu cgi*/
+  return "/diody.html";
 }
 
 /**
